@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.green.greengramver1.user.UserMapper">
-    <insert id="insUser">
+    <insert id="insUser" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO user
            SET   uid = #{uid}
                , upw = #{upw}

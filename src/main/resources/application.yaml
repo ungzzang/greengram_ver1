@@ -1,23 +1,35 @@
-spring:
-  application:
-    name: GreenGramVer1
+# custom property (절대경로 Absolute Path)
+file:
+  directory: D:/mydownload/greengram_ver1
 
-  # DB ??
-  Datasource:
-    url: jdbc:mariadb://localhost/greengram_ver1
-    username: root
-    password: green502
-
+# mybatis setting
 mybatis:
   mapper-locations: xml/**/*.xml
 
+# Base URL setting
+
+
+spring: #객체
+  application: #객체
+    name: GreenGramVer1 #멤버필드명에 값 넣는 이런느낌
+
+  # DB setting
+  Datasource:
+    url: jdbc:mariadb://localhost/greengram_ver1 # 접속 url, localhost가 ip
+    username: root
+    password: green502
+
+  servlet: #객체
+    multipart: #객체
+      max-file-size: 10MB #대쉬 넣어도 알아서 (카멜케이스로) 인식해서 작동함, 멤버필드명
+
 
 springdoc:
-  api-docs:
-    version: openapi_3_0
   swagger_ui:
     default-model-expand-depth: 10
-    default-models-expand-depth: -1
     display-request-duration:  true
+    operations-sorter: method
     path: /swagger
+  cache:
+    disabled: true #캐시 끈다는거
 
