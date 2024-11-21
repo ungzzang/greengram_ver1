@@ -2,7 +2,6 @@ package com.green.greengramver1.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserInsReq {
+public class UserSignUpReq {
     @JsonIgnore
     private long userId;
     @Schema(description = "유저 아이디", example = "mic", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -22,5 +21,4 @@ public class UserInsReq {
     private String pic; //내부적으로 사용함, 파일명 저장용
     @Schema(description = "유저 닉네임", example = "홍길동")
     private String nickName;
-
 }

@@ -39,23 +39,25 @@ public class MyFileUtils {
 
     // 파일명에서 확장자 추출 (.jpg 같은거)
     public String getExt(String fileName){
-        int lastIdx = fileName.lastIndexOf("."); //마지막에 있는 . 인덱스값
+        int lastIdx = fileName.lastIndexOf("."); //마지막에 있는 . 위치 인덱스값(정수값)
         return fileName.substring(lastIdx);
     }
 
     // 랜덤파일명 생성
     public String makeRandomFileName(){
-        return UUID.randomUUID().toString();
+        return UUID.randomUUID().toString(); //UUID가 랜덤형식
     }
 
     // 랜덤파일명 + 확장자 생성
     // 오버로딩(같은 이름의 메소드 여러개 만드는 기법, 파라미터 다르면 구분됨)
     public String makeRandomFileName(String originalFileName) {
-       return makeRandomFileName() + getExt(originalFileName);
+       return makeRandomFileName() + getExt(originalFileName); // 스트링끼리 +한거
     }
 
     public String makeRandomFileName(MultipartFile file) {
         return makeRandomFileName(file.getOriginalFilename());
+        //getOriginalFilename()는 스트링이고 makeRandomFileName(String originalFileName) 얘가 스트링을 파라미터로 받음
+        //getOriginalFilename()는 내가 올린 진짜 파일이름
     }
 
     //파일을 원하는 경로에 저장
