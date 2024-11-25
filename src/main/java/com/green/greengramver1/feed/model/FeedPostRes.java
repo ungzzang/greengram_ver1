@@ -10,6 +10,5 @@ import java.util.List;
 public class FeedPostRes {
     //feed PK값과 파일이름 여러개 리턴할 수 있어야 함.
     private long feedId;
-
     private List<String> pics;
 }

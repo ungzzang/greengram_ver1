@@ -28,8 +28,12 @@ public class UserController {
      */
     @PostMapping("sign-up")
     @Operation(summary = "회원 가입")
+
+    //파라미터 쪽 required는 들어와도돼(true), 안들어와도돼(false)를 나타내는것.(기본적으로(디폴트로) required는 true)
+    //RequestBody만 p같은거 사용(파라미터 이름 안중요), RequestPart는 pic같은거 사용할때(멤버필드)
     public ResultResponse<Integer> signUp(@RequestPart UserSignUpReq p // 데이터 받기위해
                                         , @RequestPart(required = false) MultipartFile pic // 파일 받기위해
+                                          // MultipartFile pic의 pic은 주솟값이 저장되어있다.(MultipartFile의 주솟값)
     ) {
         log.info("UserInsReq: {}, file: {}", p, pic != null ? pic.getOriginalFilename() : null);
         // pic이 null일때 getOriginalFilename()이거 호출하면 에러나서 삼항식으로 null체크한거

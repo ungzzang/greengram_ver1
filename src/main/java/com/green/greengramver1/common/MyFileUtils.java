@@ -16,7 +16,7 @@ import java.util.UUID;
 //@AllArgsConstructor 얘는 스프링한테 uploadPath에 뭐넣을지 더 말해줄수없어서 생성자를 직접 만든거
 @Slf4j
 @Component //빈등록 (@Mapper, @Service는 얘 상속받음)
-public class MyFileUtils {
+public class MyFileUtils { //스프링이 이 클래스를 객체화하고 객체주소값을 관리함
     private final String uploadPath;
 
     /*
@@ -33,29 +33,40 @@ public class MyFileUtils {
     // 디렉토리 생성
     public String makeFolders(String path){
         File file = new File(uploadPath, path);
-        file.mkdirs(); //하나만들때도 되고 여러개도 되기에 dirs를 사용.
+        // File file = new File(uploadPath + "/" + path)도 됨. 이렇게하면 인자 하나만 보내는거, 인자하나받는 생성자도 있어서 생성자 총 2개가됨.
+
+        // static 아님 >> 객체화하고 주소값(file.)으로 호출했기 때문에
+        // 리턴타입은 boolean >> if()안에서 호출했기 때문에
+        // 파라미터는 없음 >> 호출 때 인자를 보내지 않았기 때문에
+        // 메소드명은 >> exists였다.
+        if(!file.exists()){ //ddd나 aaa 폴더 하나이상 존재하면 true, 없으면 false, 존재하지 않는다면 폴더만들겠다(!붙어서)
+            file.mkdirs();
+        }
+        //file.mkdirs(); //하나만들때도 되고 여러개도 되기에 dirs를 사용. //얘가 폴더만들어줌(폴더가 있으면 그냥 지나감)
         return file.getAbsolutePath();
     }
 
     // 파일명에서 확장자 추출 (.jpg 같은거)
-    public String getExt(String fileName){
-        int lastIdx = fileName.lastIndexOf("."); //마지막에 있는 . 위치 인덱스값(정수값)
+    public String getExt(String fileName){ // ex) fileName = abc.jpg
+        int lastIdx = fileName.lastIndexOf("."); //마지막에 있는 . 위치 인덱스값(정수값) ex) 3
         return fileName.substring(lastIdx);
     }
 
     // 랜덤파일명 생성
     public String makeRandomFileName(){
-        return UUID.randomUUID().toString(); //UUID가 랜덤형식
+        return UUID.randomUUID().toString(); //UUID가 랜덤형식(유니버셜 유니크 아이디)
     }
 
     // 랜덤파일명 + 확장자 생성
     // 오버로딩(같은 이름의 메소드 여러개 만드는 기법, 파라미터 다르면 구분됨)
     public String makeRandomFileName(String originalFileName) {
        return makeRandomFileName() + getExt(originalFileName); // 스트링끼리 +한거
+        //makeRandomFileName()얘는 리턴메소드다. 왜냐면 리턴해야되는데 쟤(makeRandomFileName())가 리턴이 아니면 그 값을 받아 리턴못하니까
     }
 
     public String makeRandomFileName(MultipartFile file) {
         return makeRandomFileName(file.getOriginalFilename());
+        // file.getOriginalFilename()얘는 리턴메소드이다.(괄호에 둘러쌓였음), 리턴해야 값을 받고 makeRandomFileName(file.getOriginalFilename());이게 되니까
         //getOriginalFilename()는 스트링이고 makeRandomFileName(String originalFileName) 얘가 스트링을 파라미터로 받음
         //getOriginalFilename()는 내가 올린 진짜 파일이름
     }
@@ -63,7 +74,8 @@ public class MyFileUtils {
     //파일을 원하는 경로에 저장
     public void transferTo(MultipartFile multipartFile,  String path) throws IOException {
         File file = new File(uploadPath, path);
-        multipartFile.transferTo(file);
+        multipartFile.transferTo(file);// file을 옮긴다.(저장)
+        // MultipartFile은 인터페이스고 이걸 상속받은 객체주소값이 multipartFile에 담긴다.
     }
 }
 

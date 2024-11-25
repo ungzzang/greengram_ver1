@@ -40,18 +40,19 @@ public class UserService {
         log.info("path: {}", path);
         String filePath = String.format("%s/%s", path, savedPicName);*/
 
-        if(pic == null) {
+        if(pic == null) { //pic이 null이면 오리지널네임이 없어서 밑에 과정없이 바로 result 리턴함.
             return result;
         }
 
         // 저장 위치 만든다.
         // middlePath = user/${userId}
         // filePath = user/${userId}/${savedPicName}
-        long userId = p.getUserId(); //user를 insert 후에 얻을 수 있다.
+        long userId = p.getUserId(); //user를 insert 후에 얻을 수 있다. //Req에 있던 userId를 외부로 빼냄,뽑아냄(다른 userId로)
         String middlePath = String.format("user/%d", userId); //userId는 pk값
         myFileUtils.makeFolders(middlePath);
         log.info("middlePath: {}", middlePath);
         String filePath = String.format("%s/%s", middlePath, savedPicName);
+        //여러가지 언어(일본어, 아랍어 등)의 파일명보다는 문제없는 숫자와 영어로 된 파일이름을 만들려고 파일이름을 바꿨다.
 
         try {
             myFileUtils.transferTo(pic, filePath); //filePath위치로 파일만들어줌

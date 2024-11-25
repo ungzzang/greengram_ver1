@@ -1,9 +1,7 @@
 package com.green.greengramver1.feed;
 
 import com.green.greengramver1.common.MyFileUtils;
-import com.green.greengramver1.feed.model.FeedPicDto;
-import com.green.greengramver1.feed.model.FeedPostReq;
-import com.green.greengramver1.feed.model.FeedPostRes;
+import com.green.greengramver1.feed.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.stereotype.Service;
@@ -39,7 +37,7 @@ public class FeedService {
         //feedPicDto에 feedId값 넣어주세요.
         feedPicDto.setFeedId(feedId);
 
-        for(MultipartFile pic : pics) {
+        for(MultipartFile pic : pics) { //사진 여러장 저장하려고 for문 돌림.
             String savedPicName = myFileUtils.makeRandomFileName(pic);
             String filePath = String.format("%s/%s", middlePath, savedPicName);
 
@@ -49,7 +47,7 @@ public class FeedService {
                 e.printStackTrace();
             }
             feedPicDto.setPic(savedPicName);
-            mapper.insFeedPic(feedPicDto); //(맵퍼와 연결하는용)
+            mapper.insFeedPic(feedPicDto); //(맵퍼와 연결하는용), 위에 mapper.은 튜플하나, 여기 mapper.은 튜플 여러개 넣으려고
 
             picsStr.add(savedPicName); //이름도 하나씩 들어가게
             //res.getPics().add(savedPicName);
@@ -60,5 +58,16 @@ public class FeedService {
          res.setFeedId(p.getFeedId());
          res.setPics(picsStr);
          return res;
+    }
+
+    public List<FeedGetRes> getFeedList(FeedGetReq p){
+        List<FeedGetRes> list = mapper.selFeedList(p);
+        //사진 매핑
+        for(FeedGetRes res : list){
+            //DB에서 각 피드에 맞는 사진 정보를 가져온다.
+            List<String> picList = mapper.selFeedPicList(res.getFeedId());
+            res.setPics(picList);
+        }
+        return list;
     }
 }

@@ -2,12 +2,18 @@
 file:
   directory: D:/mydownload/greengram_ver1
 
+
+default-page-size : 20
+
+
 # mybatis setting
 mybatis:
   mapper-locations: xml/**/*.xml
 
 # Base URL setting
-
+#server:
+# servlet:
+#   context-path: /api
 
 spring: #객체
   application: #객체
@@ -24,12 +30,14 @@ spring: #객체
       max-file-size: 10MB #대쉬 넣어도 알아서 (카멜케이스로) 인식해서 작동함, 멤버필드명
 
 
+
 springdoc:
   swagger_ui:
     default-model-expand-depth: 10
     display-request-duration:  true
     operations-sorter: method
     path: /swagger
+
   cache:
     disabled: true #캐시 끈다는거
 
