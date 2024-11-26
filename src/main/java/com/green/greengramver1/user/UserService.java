@@ -26,8 +26,10 @@ public class UserService {
         //String savedPicName = myFileUtils.makeRandomFileName(pic.getOriginalFilename());
         String savedPicName = (pic != null ? myFileUtils.makeRandomFileName(pic) : null); //위과 같은 결과가 나왔으면 좋겠다.(그래서 메소드만들었다)
         // 확장자를 살리기 위해서 위처럼 작성했다.
-        //밑에 줄들을 위해 만든 명: savedPicName
+        // 밑에 줄들을 위해 만든 명: savedPicName
 
+        // BCrypt.gensalt(): 솔트값을 만들어주는 함수
+        // BCrypt.hashpw(): 비밀번호 해시화 해줌
         String hashedPassword = BCrypt.hashpw(p.getUpw(), BCrypt.gensalt()); //비번 암호화
         log.info("hashedPassword: {}", hashedPassword);
         p.setUpw(hashedPassword); //비번설정
