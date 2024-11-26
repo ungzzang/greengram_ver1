@@ -68,6 +68,9 @@ public class FeedService {
             List<String> picList = mapper.selFeedPicList(res.getFeedId());
             res.setPics(picList);
         }
+        //N+1 이슈 (list받아오는거 한번 + list안의 N개 만큼 돌리니까), 별로 안좋음.
+        //피드 셀렉트하고 피드하나가 가지고 있는 정보 셀렉트, 셀렉트 두번한다.
+
         return list;
     }
 }

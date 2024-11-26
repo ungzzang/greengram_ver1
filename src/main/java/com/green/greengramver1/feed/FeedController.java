@@ -24,7 +24,7 @@ import java.util.List;
 public class FeedController {
     private final FeedService service;
 
-    @PostMapping
+    @PostMapping //피드등록
     public ResultResponse<FeedPostRes> postFeed(@RequestPart List<MultipartFile> pics
                                               , @RequestPart FeedPostReq p){
         FeedPostRes res = service.postFeed(pics, p);
@@ -35,13 +35,14 @@ public class FeedController {
     }
 
     /*
-        QueryString - URL에 KEY, VALUE값을 포함한다.
+        QueryString - URL에 KEY, VALUE값을 포함한다. (url?key=value&key2=value2), url에 빈칸은 없어야한다.
      */
     @GetMapping
     //@ParameterObject - swagger에서 requestParam처럼 사용하게함
+    //@ModelAttribute - 쿼리스트링으로 받을때, formData(Json아님)로 데이터 받을때
     public ResultResponse<List<FeedGetRes>> getFeedList(@ParameterObject @ModelAttribute FeedGetReq p) {
         log.info("p: {}", p); //브라우저에 localhost:8080/api/feed?page=1&size=20 작성하면 로그에 뜬다.
-        List<FeedGetRes> list = service.getFeedList(p);
+        List<FeedGetRes> list = service.getFeedList(p); //p는 페이징하기위한 정보
         return ResultResponse.<List<FeedGetRes>>builder()
                 .resultMessage(String.format("%d rows", list.size()))
                 .resultData(list)
