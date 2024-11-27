@@ -16,7 +16,6 @@ import java.util.List;
 public class FeedService {
     private final FeedMapper mapper;
     private final MyFileUtils myFileUtils;
-    private final HttpMessageConverters messageConverters;
 
     public FeedPostRes postFeed(List<MultipartFile> pics, FeedPostReq p){
         int result = mapper.insFeed(p);
@@ -61,11 +60,15 @@ public class FeedService {
     }
 
     public List<FeedGetRes> getFeedList(FeedGetReq p){
+        // DB에서 각 피드에 대한 정보 가져온다.(내용, 위치, feedId 등)
         List<FeedGetRes> list = mapper.selFeedList(p);
+
         //사진 매핑
-        for(FeedGetRes res : list){
+        for(FeedGetRes res : list){// 1번 list의 1번 객체res, 2번 list의 2번 객체res 이런느낌)
             //DB에서 각 피드에 맞는 사진 정보를 가져온다.
             List<String> picList = mapper.selFeedPicList(res.getFeedId());
+            //각 피드에 사진정보들이 담긴 picList를 pics에 넣는다.
+            //(1번 res객체에 사진들(pics), 2번 res객체에 사진들(pics) 이런느낌)
             res.setPics(picList);
         }
         //N+1 이슈 (list받아오는거 한번 + list안의 N개 만큼 돌리니까), 별로 안좋음.

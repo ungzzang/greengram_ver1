@@ -72,9 +72,12 @@ public class MyFileUtils { //스프링이 이 클래스를 객체화하고 객�
     }
 
     //파일을 원하는 경로에 저장
+    //multipartFile이 사진정보, path가 filePath(user/userId/savedFileName)
     public void transferTo(MultipartFile multipartFile,  String path) throws IOException {
+        // file에 uploadPath와 path가 합쳐진(부모/자식)
+        // ex)D:/mydownload/test1_greengram/user/1/b76892b9-b2d4-4921-a896-fec7c9896867.jpg 가 담긴다.
         File file = new File(uploadPath, path);
-        multipartFile.transferTo(file);// file을 옮긴다.(저장)
+        multipartFile.transferTo(file);// file을 옮긴다.(저장), 사진을 다른이름으로 저장한다고 생각(file이 가지고 있는 주소로)
         // MultipartFile은 인터페이스고 이걸 상속받은 객체주소값이 multipartFile에 담긴다.
     }
 }

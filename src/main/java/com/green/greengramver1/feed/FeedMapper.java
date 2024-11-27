@@ -2,7 +2,6 @@ package com.green.greengramver1.feed;
 
 import com.green.greengramver1.feed.model.*;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,4 +13,5 @@ public interface FeedMapper {
 
     int insFeedPic(FeedPicDto p);
     List<String> selFeedPicList(long p);
+
 }
