@@ -23,7 +23,7 @@
     -->
     <select id="selFeedList">
         SELECT a.feed_id AS feedId, a.contents, a.location, a.created_at AS createdAt
-                , b.user_id AS writerId
+                , b.user_id AS writerUserId
                 , if(b.nick_name IS NULL, b.uid, b.nick_name) as writerNm <!--삼항식 if(a is null, b, c) a가 널이면 b, 아니면 c-->
                 , b.pic as writerPic
           FROM feed a

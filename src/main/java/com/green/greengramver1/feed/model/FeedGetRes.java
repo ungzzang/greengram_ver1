@@ -12,7 +12,7 @@ public class FeedGetRes {
     private String contents;
     private String location;
     private String createdAt;
-    private long writerId;
+    private long writerUserId;
     private String writerNm;
     private String writerPic;
 

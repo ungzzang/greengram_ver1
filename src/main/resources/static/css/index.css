@@ -5,7 +5,7 @@ body { min-height: 100%; }
 a { text-decoration: none; color: black; }
 .back_color { background-color: #fafafa; }
 .bold { font-weight: bold; }
-.circleimg { display: inline-block; overflow: hidden; border-radius: 50%; border: 1px solid #ecf0f1; }
+.circleimg { display: inline-block; overflow: hidden; border-radius: 50%; border: 1px solid #ecf0f1; vertical-align: top; }
 .circleimg > img { width: 100%; height: 100%; object-fit: cover; }
 .display-none { display: none !important; }
 .div-top { border-top : 1px solid #e3e3e3; }
